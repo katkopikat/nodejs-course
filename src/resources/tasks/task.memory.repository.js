@@ -22,15 +22,15 @@ const updateTask = async (id, data) => {
 }
 
 const updateDeletedUserTasks = async userID => {
-  DB.Tasks.forEach(el => {
-    if (el.userId === userID) {
-      // eslint-disable-next-line no-param-reassign
-      el.userId = null;
+  DB.Tasks.forEach(task => {
+    const curTask = task;
+    if (curTask.userId === userID) {
+      curTask.userId = null;
     }
   });
 }
 
-const deleteTask = async (taskId, boardId) => {
+const deleteTask = async (boardId, taskId) => {
   if (typeof taskId !== 'string' || typeof boardId !== 'string') return -1;
 
   const deletedTask = DB.Tasks.findIndex(task => task.id === taskId && task.boardId === boardId);

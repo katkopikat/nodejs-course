@@ -10,7 +10,7 @@ const deleteBoard = async id => {
     const deletedId = await boardsRepo.deleteBoard(id);
 
     if (deletedId) {
-        await tasksRepo.deleteBoardTasks(deletedId);
+        await tasksRepo.deleteBoardTasks(id);
     }
     
     return deletedId;

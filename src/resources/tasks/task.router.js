@@ -8,8 +8,8 @@ router.route('/').get(async (req, res) => {
 });
 
 
-router.route('/:id').get(async (req, res) => {
-    const task = await tasksService.getTask(req.params.id);
+router.route('/:taskId').get(async (req, res) => {
+    const task = await tasksService.getTask(req.params.taskId);
     res.status(200).json(task);
  }
 );
@@ -21,16 +21,18 @@ router.route('/').post(async (req, res) => {
 });
 
 
-router.route('/:id').put(async (req, res) => {
-  const task = await tasksService.updateTask(req.params.id, {...req.body, ...req.params});
+router.route('/:taskId').put(async (req, res) => {
+  const task = await tasksService.updateTask(req.params.taskId, {...req.body, ...req.params});
   res.status(200).json(task);
 });
 
 
-router.route('/:id').delete(async (req, res) => {
-  const task  = await tasksService.deleteTask(req.params.id);
+router.route('/:taskId').delete(async (req, res) => {
+  const { taskId } = req.params;
+  const task = await tasksService.deleteTask(taskId);
+
   if (task) {
-    res.status(204).json(req.params.id);
+    res.status(204).json(taskId);
   } else {
     res.sendStatus(404);
   }

@@ -8,8 +8,8 @@ router.route('/').get(async (req, res) => {
 });
 
 
-router.route('/:id').get(async (req, res) => {
-    const board = await boardsService.getBoard(req.params.id);
+router.route('/:boardId').get(async (req, res) => {
+    const board = await boardsService.getBoard(req.params.boardId);
     res.status(200).json(board);
  }
 );
@@ -21,19 +21,15 @@ router.route('/').post(async (req, res) => {
 });
 
 
-router.route('/:id').put(async (req, res) => {
-  const board = await boardsService.updateBoard(req.params.id, req.body);
+router.route('/:boardId').put(async (req, res) => {
+  const board = await boardsService.updateBoard(req.params.boardId, req.body);
   res.status(200).json(board);
 });
 
 
-router.route('/:id').delete(async (req, res) => {
-  const boardID = await boardsService.deleteBoard(req.params.id);
-  if (boardID) {
-    res.status(204).json(req.params.id);
-  } else {
-    res.sendStatus(404);
-  }
+router.route('/:boardId').delete(async (req, res) => {
+  const boardID = await boardsService.deleteBoard(req.params.boardId);
+  res.sendStatus(boardID ? 204 : 404);
 });
 
 

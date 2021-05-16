@@ -25,12 +25,12 @@ const updateTask = async (id, data) => {
 const deleteTask = async id => {
   const task = DB.Tasks.find(el => el.id === id);
   const [ deleted ] = _.remove(DB.Tasks, task);
-  return deleted ? deleted.id : null;
+  return deleted ? deleted.id : '';
 }
 
 const deleteBoardTasks = async boardID => {
-  // const tasks = DB.Tasks.filter(task => task.boardId === boardID);
-  _.remove(DB.Tasks, task => task.boardId === boardID);
+  const tasks = DB.Tasks.filter(task => task.boardId === boardID);
+  _.remove(DB.Tasks, tasks);
 }
 
 const updateDeletedUserTasks = async userID => {
@@ -38,6 +38,6 @@ const updateDeletedUserTasks = async userID => {
     // eslint-disable-next-line no-param-reassign
     el.userId = el.userId === userID ? null : el.userId;
   });
-
 }
+
 module.exports = { getAllTasks, createTask, getTask, updateTask, deleteTask, deleteBoardTasks, updateDeletedUserTasks};

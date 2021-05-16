@@ -28,5 +28,16 @@ const deleteTask = async id => {
   return deleted ? deleted.id : null;
 }
 
+const deleteBoardTasks = async boardID => {
+  // const tasks = DB.Tasks.filter(task => task.boardId === boardID);
+  _.remove(DB.Tasks, task => task.boardId === boardID);
+}
 
-module.exports = { getAllTasks, createTask, getTask, updateTask, deleteTask };
+const updateDeletedUserTasks = async userID => {
+  DB.Tasks.forEach(el => {
+    // eslint-disable-next-line no-param-reassign
+    el.userId = el.userId === userID ? null : el.userId;
+  });
+
+}
+module.exports = { getAllTasks, createTask, getTask, updateTask, deleteTask, deleteBoardTasks, updateDeletedUserTasks};

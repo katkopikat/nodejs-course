@@ -24,7 +24,10 @@ const updateBoard = async (id, data) => {
 
 const deleteBoard = async id => {
   const board = DB.Boards.find(el => el.id === id);
-  _.remove(DB.Boards, board);
+  console.log(board)
+  const [deletedBoard] = _.remove(DB.Boards, board);
+  console.log(deletedBoard)
+  return deletedBoard ? deletedBoard.id : null;
 }
 
 

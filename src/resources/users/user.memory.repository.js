@@ -25,6 +25,7 @@ const updateUser = async (id, data) => {
 const deleteUser = async id => {
   const user = DB.Users.find(el => el.id === id);
   _.remove(DB.Users, user);
+  // обновить все таски
 }
 
 

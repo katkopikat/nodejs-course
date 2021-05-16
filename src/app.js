@@ -26,10 +26,4 @@ app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 boardRouter.use('/:boardId/tasks', taskRouter);
 
-app.use((err, req, res, next) => {
-  console.log(err)
-  const { name, message, stack } = err;
-  res.status(500).json({ name, message, stack })
-})
-
 module.exports = app;

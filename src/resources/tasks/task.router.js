@@ -28,14 +28,15 @@ router.route('/:taskId').put(async (req, res) => {
 
 
 router.route('/:taskId').delete(async (req, res) => {
-  const { taskId } = req.params;
-  const task = await tasksService.deleteTask(taskId);
+    const { taskId, boardId } = req.params;
+    const idx = await tasksService.deleteTask(taskId, boardId);
 
-  if (task) {
-    res.status(204).json(taskId);
-  } else {
-    res.sendStatus(404);
-  }
+    if (idx !== -1) {
+      res.status(204).send('The task has been deleted');
+    } else {
+      res.status(404).send('Not Found');
+    }
+    
 });
 
 

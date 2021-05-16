@@ -22,10 +22,14 @@ const updateBoard = async (id, data) => {
   return board;
 }
 
-const deleteBoard = async id => {
-  const board = DB.Boards.find(el => el.id === id);
-  const [ deletedBoard ] = _.remove(DB.Boards, board);
-  return deletedBoard ? deletedBoard.id : null;
+const deleteBoard = async boardId => {
+  if (typeof boardId !== 'string') return -1;
+  const boardIdx = DB.Boards.findIndex(board => board.id === boardId);
+
+  if (boardIdx !== -1) {
+    _.remove(DB.Boards, DB.Boards[boardIdx]);
+  }
+  return boardIdx;
 }
 
 

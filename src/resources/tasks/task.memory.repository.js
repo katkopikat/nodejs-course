@@ -15,29 +15,43 @@ const getTask = async id => {
   return task;
 }
 
-
 const updateTask = async (id, data) => {
   const task = DB.Tasks.find(el => el.id === id);
   _.assign(task, data);
   return task;
 }
 
-const deleteTask = async id => {
-  const task = DB.Tasks.find(el => el.id === id);
-  const [ deleted ] = _.remove(DB.Tasks, task);
-  return deleted ? deleted.id : '';
-}
-
-const deleteBoardTasks = async boardID => {
-  const tasks = DB.Tasks.filter(task => task.boardId === boardID);
-  _.remove(DB.Tasks, tasks);
-}
-
 const updateDeletedUserTasks = async userID => {
   DB.Tasks.forEach(el => {
-    // eslint-disable-next-line no-param-reassign
-    el.userId = el.userId === userID ? null : el.userId;
+    if (el.userId === userID) {
+      // eslint-disable-next-line no-param-reassign
+      el.userId = null;
+    }
   });
 }
+
+const deleteTask = async (taskId, boardId) => {
+  if (typeof taskId !== 'string' || typeof boardId !== 'string') return -1;
+
+  const deletedTask = DB.Tasks.findIndex(task => task.id === taskId && task.boardId === boardId);
+  if (deletedTask === -1) return -1;
+ 
+  _.remove(DB.Tasks, DB.Tasks[deletedTask]);
+  return deletedTask;
+}
+
+
+const deleteBoardTasks = async boardID => {
+  if (typeof boardID !== 'string') return -1;
+
+  const boardIdx = DB.Boards.findIndex(board => board.id === boardID);
+  if (boardIdx !== -1) return -1;
+  
+  const deletedTasks = DB.Tasks.filter(task => task.boardId === boardID);
+  _.remove(DB.Tasks, deletedTasks);
+  return deletedTasks;
+}
+
+
 
 module.exports = { getAllTasks, createTask, getTask, updateTask, deleteTask, deleteBoardTasks, updateDeletedUserTasks};

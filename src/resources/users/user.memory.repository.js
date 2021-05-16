@@ -15,7 +15,6 @@ const getUser = async id => {
   return  User.toResponse(user)
 }
 
-
 const updateUser = async (id, data) => {
   const user = DB.Users.find(el => el.id === id);
   _.assign(user, data);
